@@ -341,6 +341,21 @@ Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be
 | [bitlength] | <code>number</code> | <code>3072</code> | the bit length of the public modulo |
 | [simplevariant] | <code>boolean</code> | <code>false</code> | use the simple variant to compute the generator (g=n+1) |
 
+<a name="keysFromPrimes"></a>
+
+### keysFromPrimes(p, q, [simplevariant]) ⇒ [<code>KeyPair</code>](#KeyPair)
+Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
+Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+
+**Kind**: global function  
+**Returns**: [<code>KeyPair</code>](#KeyPair) - - a [KeyPair](#KeyPair) of public, private keys  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| p | <code>number</code> |  | p prime |
+| q | <code>number</code> |  | q prime |
+| [simplevariant] | <code>boolean</code> | <code>false</code> | use the simple variant to compute the generator (g=n+1) |
+
 <a name="KeyPair"></a>
 
 ### KeyPair : <code>Object</code>

@@ -127,3 +127,14 @@ export function generateRandomKeys(bitlength?: number, simpleVariant?: boolean):
  * @returns {KeyPair} - a {@link KeyPair} of public, private keys
  */
 export function generateRandomKeysSync(bitlength?: number, simpleVariant?: boolean): KeyPair;
+/**
+ * Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
+ * Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+ *
+ * @param {number}  - p prime
+ * @param {number}  - q prime
+ * @param {boolean} [simplevariant = false] - use the simple variant to compute the generator (g=n+1)
+ *
+ * @returns {KeyPair} - a {@link KeyPair} of public, private keys
+ */
+export function keysFromPrimes(p: any, q: any, simpleVariant?: boolean): KeyPair;
