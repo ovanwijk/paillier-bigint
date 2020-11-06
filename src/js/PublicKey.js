@@ -40,6 +40,30 @@ export default class PublicKey {
     return (bcu.modPow(this.g, m, this._n2) * bcu.modPow(r, this.n, this._n2)) % this._n2
   }
 
+  encryptOtherNA (m, r, n2) {
+    return (bcu.modPow(this.g, m, this._n2) * bcu.modPow(r, this.n, this._n2)) % n2
+  }
+
+  encryptOtherNB (m, r, n2) {
+    return (bcu.modPow(this.g, m, n2) * bcu.modPow(r, this.n, this._n2)) % this._n2
+  }
+
+  encryptOtherNC (m, r, n2) {
+    return (bcu.modPow(this.g, m, this._n2) * bcu.modPow(r, this.n, n2)) % this._n2
+  }
+
+  encryptOtherNF (m, r, n2) {
+    return (bcu.modPow(this.g, m, this._n2) * bcu.modPow(r, this.n, n2)) % n2
+  }
+
+  encryptOtherND (m, r, n2) {
+    return (bcu.modPow(this.g, m, n2) * bcu.modPow(r, this.n, n2)) % this._n2
+  }
+
+  encryptOtherNE (m, r, n2) {
+    return (bcu.modPow(this.g, m, n2) * bcu.modPow(r, this.n, n2)) % this._n2
+  }
+
   /**
      * Homomorphic addition
      *

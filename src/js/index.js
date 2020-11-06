@@ -5,6 +5,18 @@ import PrivateKey, { L } from './PrivateKey'
 export { default as PublicKey } from './PublicKey'
 export { default as PrivateKey } from './PrivateKey'
 
+export function multiplyOtherN2 (c, k, n2) {
+  return bcu.modPow(BigInt(c), BigInt(k), n2)
+}
+
+export function generateDualG (n1, n2) {
+  var r = 0
+  do {
+    r = bcu.randBetween(n1)
+  } while (bcu.gcd(r, n1) !== 1n && bcu.gcd(r, n2) !== 1n)
+  return r
+}
+
 /**
  * @typedef {Object} KeyPair
  * @property {PublicKey} publicKey - a Paillier's public key
@@ -94,23 +106,15 @@ export function generateRandomKeysSync (bitlength = 3072, simpleVariant = false)
  *
  * @returns {KeyPair} - a {@link KeyPair} of public, private keys
  */
-export function keysFromPrimes (p, q, simpleVariant = false) {
-  let n, g, lambda, mu
+export function keysFromPrimes (p, q, g) {
+  let n, lambda, mu
   // if p and q are bitLength/2 long ->  2**(bitLength - 2) <= n < 2**(bitLength)
   n = p * q
-  if (simpleVariant === true) {
-    // If using p,q of equivalent length, a simpler variant of the key
-    // generation steps would be to set
-    // g=n+1, lambda=(p-1)(q-1), mu=lambda.invertm(n)
-    g = n + 1n
-    lambda = (p - 1n) * (q - 1n)
-    mu = bcu.modInv(lambda, n)
-  } else {
-    const n2 = n ** 2n
-    g = getGenerator(n, n2)
-    lambda = bcu.lcm(p - 1n, q - 1n)
-    mu = bcu.modInv(L(bcu.modPow(g, lambda, n2), n), n)
-  }
+
+  const n2 = n ** 2n
+  g = g || getGenerator(n, n2)
+  lambda = bcu.lcm(p - 1n, q - 1n)
+  mu = bcu.modInv(L(bcu.modPow(g, lambda, n2), n), n)
 
   const publicKey = new PublicKey(n, g)
   const privateKey = new PrivateKey(lambda, mu, publicKey, p, q)
