@@ -106,15 +106,40 @@ export function generateRandomKeysSync (bitlength = 3072, simpleVariant = false)
  *
  * @returns {KeyPair} - a {@link KeyPair} of public, private keys
  */
-export function keysFromPrimes (p, q, g) {
-  let n, lambda, mu
+export function keysFromPrimesSimple (p, q) {
+  // let n, lambda, mu
   // if p and q are bitLength/2 long ->  2**(bitLength - 2) <= n < 2**(bitLength)
-  n = p * q
+  const n = p * q
+
+  // const n2 = n ** 2n
+  const g = n + 1n
+  const lambda = (p - 1n) * (q - 1n)
+  const mu = bcu.modInv(lambda, n)
+
+  const publicKey = new PublicKey(n, g)
+  const privateKey = new PrivateKey(lambda, mu, publicKey, p, q)
+  return { publicKey, privateKey }
+}
+
+/**
+ * Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
+ * Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+ *
+ * @param {bigint}  - p prime
+ * @param {bigint}  - q prime
+ * @param {bigint}  - g manual G
+ *
+ * @returns {KeyPair} - a {@link KeyPair} of public, private keys
+ */
+export function keysFromPrimes (p, q, g) {
+  // let n, lambda, mu
+  // if p and q are bitLength/2 long ->  2**(bitLength - 2) <= n < 2**(bitLength)
+  const n = p * q
 
   const n2 = n ** 2n
   g = g || getGenerator(n, n2)
-  lambda = bcu.lcm(p - 1n, q - 1n)
-  mu = bcu.modInv(L(bcu.modPow(g, lambda, n2), n), n)
+  const lambda = bcu.lcm(p - 1n, q - 1n)
+  const mu = bcu.modInv(L(bcu.modPow(g, lambda, n2), n), n)
 
   const publicKey = new PublicKey(n, g)
   const privateKey = new PrivateKey(lambda, mu, publicKey, p, q)

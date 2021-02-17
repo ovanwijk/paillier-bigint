@@ -299,9 +299,7 @@ Paillier private-key decryption
 <a name="PrivateKey+getRandomFactor"></a>
 
 #### privateKey.getRandomFactor(c) ⇒ <code>bigint</code>
-Recover the random factor used for encrypting a message with the complementary public key.
-The recovery function only works if the public key generator g was using the simple variant
-g = 1 + n
+Recover the random factor used for encrypting a message with the complementary public key.The recovery function only works if the public key generator g was using the simple variantg = 1 + n
 
 **Kind**: instance method of [<code>PrivateKey</code>](#PrivateKey)  
 **Returns**: <code>bigint</code> - - the random factor (mod n)  
@@ -330,8 +328,7 @@ Generates a pair private, public key for the Paillier cryptosystem.
 <a name="generateRandomKeysSync"></a>
 
 ### generateRandomKeysSync([bitlength], [simplevariant]) ⇒ [<code>KeyPair</code>](#KeyPair)
-Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
-Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
 
 **Kind**: global function  
 **Returns**: [<code>KeyPair</code>](#KeyPair) - - a [KeyPair](#KeyPair) of public, private keys  
@@ -341,20 +338,33 @@ Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be
 | [bitlength] | <code>number</code> | <code>3072</code> | the bit length of the public modulo |
 | [simplevariant] | <code>boolean</code> | <code>false</code> | use the simple variant to compute the generator (g=n+1) |
 
-<a name="keysFromPrimes"></a>
+<a name="keysFromPrimesSimple"></a>
 
-### keysFromPrimes(p, q, [simplevariant]) ⇒ [<code>KeyPair</code>](#KeyPair)
-Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
-Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+### keysFromPrimesSimple(p, q, [simplevariant]) ⇒ [<code>KeyPair</code>](#KeyPair)
+Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
 
 **Kind**: global function  
 **Returns**: [<code>KeyPair</code>](#KeyPair) - - a [KeyPair](#KeyPair) of public, private keys  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| p | <code>number</code> |  | p prime |
-| q | <code>number</code> |  | q prime |
+| p | <code>bigint</code> |  | p prime |
+| q | <code>bigint</code> |  | q prime |
 | [simplevariant] | <code>boolean</code> | <code>false</code> | use the simple variant to compute the generator (g=n+1) |
+
+<a name="keysFromPrimes"></a>
+
+### keysFromPrimes(p, q, g) ⇒ [<code>KeyPair</code>](#KeyPair)
+Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+
+**Kind**: global function  
+**Returns**: [<code>KeyPair</code>](#KeyPair) - - a [KeyPair](#KeyPair) of public, private keys  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>bigint</code> | p prime |
+| q | <code>bigint</code> | q prime |
+| g | <code>bigint</code> | g manual G |
 
 <a name="KeyPair"></a>
 

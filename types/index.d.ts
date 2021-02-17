@@ -85,6 +85,12 @@ export class PublicKey {
        * @returns {bigint} - the encryption of m with this public key
        */
     encrypt(m: bigint, r?: bigint): bigint;
+    encryptOtherNA(m: any, r: any, n2: any): bigint;
+    encryptOtherNB(m: any, r: any, n2: any): bigint;
+    encryptOtherNC(m: any, r: any, n2: any): bigint;
+    encryptOtherNF(m: any, r: any, n2: any): bigint;
+    encryptOtherND(m: any, r: any, n2: any): bigint;
+    encryptOtherNE(m: any, r: any, n2: any): bigint;
     /**
        * Homomorphic addition
        *
@@ -103,6 +109,7 @@ export class PublicKey {
        */
     multiply(c: bigint, k: bigint | number): bigint;
 }
+export function generateDualG(n1: any, n2: any): number;
 /**
  * @typedef {Object} KeyPair
  * @property {PublicKey} publicKey - a Paillier's public key
@@ -131,10 +138,22 @@ export function generateRandomKeysSync(bitlength?: number, simpleVariant?: boole
  * Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
  * Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
  *
- * @param {number}  - p prime
- * @param {number}  - q prime
+ * @param {bigint}  - p prime
+ * @param {bigint}  - q prime
+ * @param {bigint}  - g manual G
+ *
+ * @returns {KeyPair} - a {@link KeyPair} of public, private keys
+ */
+export function keysFromPrimes(p: any, q: any, g: any): KeyPair;
+/**
+ * Generates a pair private, public key for the Paillier cryptosystem in synchronous mode.
+ * Synchronous mode is NOT RECOMMENDED since it won't use workers and thus it'll be slower and may freeze thw window in browser's javascript.
+ *
+ * @param {bigint}  - p prime
+ * @param {bigint}  - q prime
  * @param {boolean} [simplevariant = false] - use the simple variant to compute the generator (g=n+1)
  *
  * @returns {KeyPair} - a {@link KeyPair} of public, private keys
  */
-export function keysFromPrimes(p: any, q: any, simpleVariant?: boolean): KeyPair;
+export function keysFromPrimesSimple(p: any, q: any): KeyPair;
+export function multiplyOtherN2(c: any, k: any, n2: any): bigint;
